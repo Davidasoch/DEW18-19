@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    
+<script>
+
+ 
+
+    function Jugador(nombre,numeroVidas,tienePistola,tieneGranada,numeroBalas){
+        this.nombre=nombre;
+        this.numeroVidas=numeroVidas;
+        this.tienePistola=tienePistola;
+        this.tieneGranada=tieneGranada;
+        this.numeroBalas=numeroBalas;
+
+
+     this.setNombre=function (nombre){
+         if (nomnbre!= ""){
+            this.nombre=nombre;
+         }
+         
+     }
+
+         this.setnumeroVidas=function (numeroVidas){
+             if(numeroVidas>=0 && numeroVidas<99){
+                this.numeroVidas=numeroVidas;
+             }
+         
+     }
+
+         this.settienePistola=function (tienePistola){
+             if(tienePistola== true || tienePistola== false){
+                this.tienePistola=tienePistola;
+             }else{
+                 this.tienePistola=false;
+             }
+         
+     }
+
+         this.settieneGranada=function (tieneGranada){
+            if(tieneGranada== true || tieneGranada== false){
+                this.tieneGranada=tieneGranada;
+             }else{
+                 this.tieneGranada=false;
+             }
+     }
+
+          this.setnumeroBalas=function (numeroBalas){
+            if(numeroBalas>=0 && numeroBalas<999){
+                this.numeroVidas=numeroVidas;
+             }
+     }
+
+          this.getNombre=function (){
+         return this.nombre;
+     }
+
+          this.getnumeroVidas=function (){
+         return this.numeroVidas;
+     }
+
+        this.gettienePistola=function (){
+         return this.tienePistola;
+     }
+
+          this.gettieneGranada=function (){
+         return this.tieneGranada;
+     }
+
+         this.getnumeroBalas=function (){
+         return this.numeroBalas;
+     }
+
+    this.infoJugador=function (){
+    var havePistola="tiene";
+    var haveGranada="tiene";
+    var haveBalas="con "+this.numeroBalas+" balas";
+    if(this.tienePistola==false){
+        havePistola="no tiene";
+        haveBalas="";
+    }
+    if(this.tieneGranada==false){
+        haveGranada="no tiene"
+    }
+
+    return "El jugador "+this.nombre+" tiene "+this.numeroVidas+" vidas, "+havePistola+" pistola "+haveBalas+" y "+haveGranada+" granadas";
+}
+
+}
+
+var player0 = new Jugador("El chori",4,true,true,200);
+var player1 = new Jugador("Pabloski",4,true,true,200);
+var player2 = new Jugador("M.A.",4,true,true,200);
+var player3 = new Jugador("Manolo",4,true,true,200);
+var player4 = new Jugador("Joaquin",4,true,true,200);
+
+
+   function Partida(){
+
+    this.jugadores=[];
+    this.jugadores[0]=player0;
+    this.jugadores[1]=player1;
+    this.jugadores[2]=player2;
+    this.jugadores[3]=player3;
+    this.jugadores[4]=player4;
+    
+
+    this.imprime=function(){
+        for (var i=0;i<this.jugadores.length;i++){
+            document.write(this.jugadores[i].infoJugador());
+            document.write("</br>")
+        }
+    }
+
+    this.ruletaRusa=function(){
+    var ran = Math.floor(Math.random() * (this.jugadores.length-1));
+    
+    this.jugadores[ran].setnumeroVidas(0);
+    document.write("</br>")
+    this.imprime();
+    }
+}
+
+    newgame0 = new Partida();
+    newgame0.imprime();
+    newgame0.ruletaRusa();
+
+</script>
+
+</body>
+</html>

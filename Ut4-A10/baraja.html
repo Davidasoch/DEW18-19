@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    
+     function Palos(){
+        this.palosarr=["Picas","Corazones","Treboles","Diamantes"]; //array con los palos
+    }
+
+   var palos = new Palos();
+
+    function Carta(palo,nombre){
+        this.palo=palo;
+        this.nombre=nombre;
+    }
+    
+    Carta.prototype.toString=function(){
+        return this.nombre+" de "+this.Palos;
+    }
+
+    function Baraja(){
+        this.cartas=[];// creamos el array de objetos carta
+        for (let i=0;i<palos.palosarr.length;i++){
+            this.cartas[i] = new Array(); // por cada palo introducimos un nuevo array que albergara 12 cartas
+            for(let j=0;j<12;j++){
+                this.cartas[i][j] = new Carta(palos.palosarr[i],(j+1)); // introducimos el palo coorrespondiente y el numero
+            }
+            
+        }
+    }
+
+    Baraja.prototype.generaCarta=function(){
+        let palotmp = Math.floor(Math.random() * (4));
+        let numtmp = Math.floor(Math.random() * (12));
+        return this.cartas[palotmp][numtmp].nombre+" de "+this.cartas[palotmp][numtmp].palo;// devolvemos  los valores del objeto de forma aleatoria
+    }
+
+    baraja1= new Baraja(); // creamos la baraja
+
+    function Partida(filas,columnas){
+        this.baraja=baraja1; // baraja con todas las cartas
+        this.mazo; // mazo con las cartas a utilizar
+        this.cartaVolteada;
+        this.aciertos;
+        this.numeroIntentos;
+        this.tablero=[];
+        this.filas=filas;
+        this.columnas=columnas;
+    } 
+
+    Partida.prototype.reparte=function(){
+        this.mazo = new Array(); // definimos el mazo como un array
+        let count=0; 
+        for (let i=0;i<4;i++){
+            for(let j=0;j<12;j++){ // colocamos todas las cartas en el mazo
+                if(count<(this.filas*this.columnas)/2){ //limitandolas al tamaño designado para nuestro tablero
+                    this.mazo[count]=  this.baraja.cartas[i][j]; //introducimos las cartas una a una
+              this.mazo[(this.filas*this.columnas)/2+count]=  this.baraja.cartas[i][j];// a partir de la posicion que tomaria la ultima carta, comenzamos a hacer las copias correspondientes para formar las parejas
+              count+=1; 
+                }
+
+            }
+            
+        }
+        console.table(this.mazo);// muestra en consola el mazo que se utilizara para la partida
+        this.barajea();// barajamos el mazo
+
+        let counttab=0;
+        for (let i=0;i<this.filas;i++){// creamos el tablero con un array bidimensional segun las especifiaciones de filas y columnas
+            this.tablero[i]= new Array();
+            for(let j=0;j<this.columnas;j++){
+                this.tablero[i][j]=this.mazo[counttab];// en cada punto del tablero introducimos una carta del mazo
+                counttab+=1;
+            }
+            
+        }
+        console.table(this.tablero);// mostramos el tablero por la consola para tener una refencia visual
+        
+    }
+
+    Partida.prototype.barajea=function(){
+        this.mazo.sort(function(a, b){return 0.5 - Math.random()});// ordenamos el array del mazo de forma aleatoria
+    }
+
+    Partida.prototype.voltea=function(i,j){
+        alert("La carta volteada es el "+this.tablero[i][j].nombre+" de "+this.tablero[i][j].palo);//se muestra que carta ha volteado el jugador
+        return this.tablero[i][j].nombre+" de "+this.tablero[i][j].palo;// devuelve el valor de la carta voolteada
+    }
+
+    Partida.prototype.compruebaAcierto=function(res1,res2){
+if(res1==res2){// si las cartas coinciden devolvemos true
+    return true;
+}else{
+    return false;
+}
+    }
+
+Partida.prototype.haFinalizado=function(){
+    if(aciertosTotales==((this.filas*this.columnas)/2)){// si los aciertos son iguales a la mitad de la multiplicacion de las filas y columnas entre 2 se ha completado el tablero
+        return true;
+    }else{
+        return false;
+    }
+}
+
+    var aciertosTotales=0;// contador de aciertos totales
+    var aciertosxy=[];//array que almacena los movimientos acertados para evitar repeticiones
+    var checkok=true;// comprueba que no hayan repeticiones en el array de aciertosxy yu la segunda seleccion de coordenadas
+    game = new Partida(2,2);
+    game.reparte();
+
+    do{
+        do{// se repite la toma de coordenadas hasta que no sea una repetida 
+            try1 = prompt("Elige una carta entre las coordenadas 0,0 y "+game.filas+","+game.columnas);
+            checkok=true;
+        for(let i=0;i<aciertosxy.length;i++){// comprobacion de repeticiones
+            if(try1==aciertosxy[i]){
+                checkok=false;
+                }
+            }
+        }while(checkok!=true)
+
+  res1 = game.voltea(try1[0],try1[2]);// si todo va bien se voltea la carta
+
+        do{// comprobaciones de repeticiones
+            try2 = prompt("Elige otra carta entre las coordenadas 0,0 y "+game.filas+","+game.columnas);
+            checkok=true;
+        for(let i=0;i<aciertosxy.length;i++){
+            if(try1==aciertosxy[i]){
+                checkok=false;
+                }
+            }
+            if(try2==try1){
+                checkok=false;
+            }
+        }while(checkok!=true)
+
+  res2 = game.voltea(try2[0],try2[2]);
+
+if(game.compruebaAcierto(res1,res2)==true){// si las cartas volteadas son iguales se descartan
+alert("Has descartado el "+res1);
+aciertosTotales+=1;//se suma el acierto
+aciertosxy.push(try1);//se añaden al array de repeticiones las coordenadas exitosas
+aciertosxy.push(try2);
+console.log("Casillas destapadas:")// se muestran las coordenadas ya utilizadas como referencia
+console.table(aciertosxy);
+}else{
+    alert("Las cartas no coinciden");
+}
+console.log("Aciertos totales: "+aciertosTotales);// se muestran loas aciertos totales como referencia
+    }while(game.haFinalizado()!=true)// si la comprobacion es true, termina el juego
+
+alert("Has ganado!");
+
+  
+    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

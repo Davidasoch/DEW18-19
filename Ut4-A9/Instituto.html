@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    
+    
+    function Instituto(){}
+
+    Instituto.prototype.Instituto=function(codigoInstituto,nombre,grupos){
+        this.codigoInstituto=codigoInstituto;
+        this.nombre=nombre;
+        this.grupos=grupos;
+    }
+
+    Instituto.prototype.GetCodigoInstituto=function(){
+        return this.codigoInstituto;
+    }
+
+        Instituto.prototype.TotalAlumnos=function(){
+            let talumnos=0;
+       for (let i=0;i<this.grupos.length;i++){
+           talumnos+=this.grupos[i].nAlumnos;
+       }
+       return talumnos;
+    }
+
+        Instituto.prototype.NuevoGrupo=function(codigo,nAlumnos){
+            let grupotmp = new Grupo(codigo,nAlumnos);
+            this.grupos.push(grupotmp);
+    }
+    
+    function Grupo(codigoGrupo,nAlumnos){
+        this.codigoGrupo=codigoGrupo;
+        this.nAlumnos=nAlumnos;
+    }
+
+var grupo0= new Grupo("0",23);
+var grupo1= new Grupo("1",30);
+var grupo2= new Grupo("2",31);
+
+var gruposarray = [grupo0,grupo1,grupo2];
+
+var Instituto0 = new Instituto();
+Instituto0.Instituto("638476","IES Puerto",gruposarray);
+
+document.write("Codigo de Instituto: "+Instituto0.GetCodigoInstituto()+"</br>");
+document.write("Numero total de alumnos: "+Instituto0.TotalAlumnos()+"</br>");
+
+Instituto0.NuevoGrupo("4",15);
+
+document.write("Numero total de alumnos: "+Instituto0.TotalAlumnos()+"</br>");
+    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

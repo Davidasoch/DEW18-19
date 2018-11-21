@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    
+<script>
+
+var equipos = [" ","Real Madrid","Barcelona","Valencia","Sevilla","Villa Real","Betis","Malaga","At. Madrid","Celta","Real Sociedad","Espanyol",
+"Alaves","Levante","Getafe","Leganes","Athletic","Eibar","Rayo","Huesca","Girona"];
+
+var quinielas = [equipos.length-1];
+
+//creamos la clase simbolos 
+function Simbolos(){
+    this.simb = ["1","x","2"];
+
+    this.generaSimbolo=function(){
+        let num = Math.floor(Math.random() * (3));
+        return this.simb[num];
+     };
+}
+
+// instanciamos un generador de simbolos
+var gen = new Simbolos();
+
+
+function muestraEquipos(equipos){
+    for (const team of equipos){
+        document.write(`-${team} `);
+    }
+}
+
+
+function generaTabla(quinielas,equipos){
+    for (let i=0;i<equipos.length;i++){
+        //añadimos a cada posicion del array de quinielas un array del tamaño de equipos
+            quinielas[i] = new Array(equipos[i]);
+            //añadimos al principio de los indices horizontales el nombre de los equipos
+            quinielas[0][i] = equipos[i];
+            //añadimos al principio de los indices verticales el nombre de los equipos
+            quinielas[i][0] = equipos[i];    
+    }
+}
+
+function generaResultados(quiniela,equipos){
+    var body = document.getElementsByTagName("body")[0];
+var tmp="";
+  var tabla   = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+
+    for (let i=0;i<equipos.length;i++){
+        var hilera = document.createElement("tr");
+        for (let j=0;j<equipos.length;j++){
+            //comprobamos que no se sobreescriban los nombres de los equipos
+            var celda = document.createElement("td");
+            if(i!=0 && j!=0){
+                //en caso de que el equipo juege contra si mismo se sustituira el simoblo generado por un "-"
+                
+                     
+                if(i!=j){
+               quiniela[i][j] = gen.generaSimbolo();
+               var textoCelda = document.createTextNode(quiniela[i][j]);
+
+                }else{
+                quiniela[i][j] = "-";
+                var textoCelda = document.createTextNode("-");  
+                }
+                celda.appendChild(textoCelda);
+                hilera.appendChild(celda);
+                
+            }else{
+                var textoCelda = document.createTextNode(quiniela[i][j]);
+
+            }
+            celda.appendChild(textoCelda);
+            hilera.appendChild(celda);
+        }
+        tblBody.appendChild(hilera);
+    }
+
+     tabla.appendChild(tblBody);
+  // appends <table> into <body>
+  body.appendChild(tabla);
+  // modifica el atributo "border" de la tabla y lo fija a "2";
+  tabla.setAttribute("border", "2");
+}
+
+
+generaTabla(quinielas,equipos);
+generaResultados(quinielas,equipos);
+console.table(quinielas);
+//quinielas(equipos);
+//muestraEquipos(equipos);
+//console.log(generaTabla(equipos));
+
+
+
+</script>
+
+<table></table>
+</body>
+</html>

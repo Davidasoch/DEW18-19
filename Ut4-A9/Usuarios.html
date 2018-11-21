@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    
+    function Usuario(){}
+
+    Usuario.prototype.Usuario=function(){
+        this.nombre;
+        this.apellidos;
+        this.dni;
+        this.anacimiento;
+        this.provincia;
+    }
+
+        Usuario.prototype.Usuario=function(nombre,apellidos,dni,anacimiento,provincia){
+        this.nombre=nombre;
+        this.apellidos=apellidos;
+        this.dni=dni;
+        this.anacimiento=anacimiento;
+        this.provincia=provincia;
+    }
+
+    Usuario.prototype.getNombre=function(){
+        return this.nombre;
+    }
+
+        Usuario.prototype.getApellidos=function(){
+        return this.apellidos;
+    }
+
+        Usuario.prototype.getDni=function(){
+        return this.dni;
+    }
+
+        Usuario.prototype.getAnacimiento=function(){
+        return this.anacimiento;
+    }
+
+        Usuario.prototype.getProvincia=function(){
+        return this.provincia;
+    }
+
+       Usuario.prototype.setNombre=function(nombre){
+        this.nombre=nombre;
+    }
+
+        Usuario.prototype.setApellidos=function(apellidos){
+        this.apellidos=apellidos;
+    }
+
+        Usuario.prototype.setDni=function(dni){
+        this.dni=dni;;
+    }
+
+        Usuario.prototype.setAnacimiento=function(anacimiento){
+        this.anacimiento=anacimiento;
+    }
+
+        Usuario.prototype.setProvincia=function(provincia){
+        this.provincia=provincia;
+    }
+
+    Usuario.prototype.generaLogin=function(){
+        var login;
+        let arraystring = this.apellidos.split(" ",2);
+        lastname1=arraystring[0];
+        lastname2=arraystring[1];
+        login = this.nombre[0]+lastname1[0]+lastname2[0]+this.anacimiento[0]+this.anacimiento[1];
+        return login;
+    }
+
+    Usuario.prototype.getEdad=function(){
+        return (new Date().getFullYear()-parseInt(this.anacimiento));
+    }
+
+    Usuario.prototype.toString=function(){
+        return this.nombre+" "+this.apellidos+" "+this.dni+" "+this.anacimiento+" "+this.provincia;
+    }
+
+        Usuario.prototype.toHtml=function(){
+        return"<p>"+this.nombre+" "+this.apellidos+" "+this.dni+" "+this.anacimiento+" "+this.provincia+"</p>";
+    }
+     
+     pablo = new Usuario();
+     mario = new Usuario();
+     susana = new Usuario();
+     silvia = new Usuario();
+
+     pablo.Usuario("Pablo","Ramirez Leon","78821041H","1996","Las Palmas");
+     mario.Usuario("Mario","Martinez Castro","56091041H","2006","Las Palmas");
+     susana.Usuario("Susana","Rodriguez quesada","67894041H","2000","Las Palmas");
+     silvia.Usuario("Silvia","Consuegra perez","78931041H","1993","Tenerife");
+
+     var users = [pablo,mario,susana,silvia];
+
+     for (let i=0;i<users.length;i++){
+        console.log(users[i].toString());
+        document.write(users[i].toString());
+     document.write("</br>");
+     }
+
+     document.write("</br>");
+
+    for (let i=0;i<users.length;i++){
+        document.write(users[i].nombre);
+        document.write("<ul>");
+        document.write("<li>"+users[i].dni+"</li>");
+        document.write("<li>"+users[i].generaLogin()+"</li>");
+        document.write("<li>"+users[i].getEdad()+"</li>");
+        document.write("</ul>");
+     document.write("</br>");
+     }
+
+
+
+
+    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
